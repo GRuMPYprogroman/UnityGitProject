@@ -1,12 +1,5 @@
 fileFormatVersion: 2
-guid: e421c7733f5de1c4e866c2d8fae8c4d9
-AssetOrigin:
-  serializedVersion: 1
-  productId: 137981
-  packageName: Simple 2D Template
-  packageVersion: 1.2
-  assetPath: Assets/IndieMarc/PlatformerDemo/Tilemap/Black/tile-corner-left-down.png
-  uploadId: 322227
+guid: f68de7f625a914c4bb6731054c261b51
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
