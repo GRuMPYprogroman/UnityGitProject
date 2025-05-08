@@ -8,10 +8,6 @@ jobs:
   testProject:
     name: Test in ${{ matrix.testMode }}
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      checks: write
-      actions: write
     strategy:
       fail-fast: false
       matrix:
@@ -25,15 +21,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # full clone
           lfs: true
 
-      - name: Show directory structure for debugging
+      - name: Show directory structure
         run: ls -R
 
       - name: Check if ProjectVersion.txt exists
         run: |
-          if [ -f "${{ matrix.projectPath }}/ProjectSettings/ProjectVersion.txt" ]; then
+          if [ -f "./My_project_2/ProjectSettings/ProjectVersion.txt" ]; then
             echo "ProjectVersion.txt found!"
           else
             echo "ERROR: ProjectVersion.txt NOT FOUND!" >&2
@@ -44,7 +39,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ matrix.projectPath }}/Library
-          key: Library-${{ matrix.projectPath }}-${{ github.run_id }}
+          key: Library-${{ matrix.projectPath }}
           restore-keys: |
             Library-
 
@@ -58,7 +53,6 @@ jobs:
         with:
           projectPath: ${{ matrix.projectPath }}
           testMode: ${{ matrix.testMode }}
-          unityVersion: 6000.0.46f1
           artifactsPath: ${{ matrix.testMode }}-artifacts
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           checkName: ${{ matrix.testMode }} Test Results
@@ -89,23 +83,14 @@ jobs:
           fetch-depth: 0
           lfs: true
 
-      - name: Show directory structure for debugging
+      - name: Show directory structure
         run: ls -R
-
-      - name: Check if ProjectVersion.txt exists
-        run: |
-          if [ -f "./My_project_2/ProjectSettings/ProjectVersion.txt" ]; then
-            echo "ProjectVersion.txt found!"
-          else
-            echo "ERROR: ProjectVersion.txt NOT FOUND!" >&2
-            exit 1
-          fi
 
       - name: Cache Library folder
         uses: actions/cache@v4
         with:
-          path: Library
-          key: Library-${{ matrix.targetPlatform }}-${{ github.run_id }}
+          path: ./My_project_2/Library
+          key: Library-${{ matrix.targetPlatform }}
           restore-keys: Library-
 
       - name: Build the project
@@ -116,7 +101,7 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
-          unityVersion: 6000.0.46f1
+          projectPath: ./My_project_2
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
