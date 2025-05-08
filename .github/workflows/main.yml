@@ -1,11 +1,9 @@
 name: Test and Build Project
 
 on: 
-
   workflow_dispatch: # workflow dispatch is for manual run from actions page
   push: # on push
-  
-  
+
 jobs:
   testProject:
     name: Test in ${{ matrix.testMode }}
@@ -61,23 +59,23 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        targetPlatform:		
-	  - StandaloneWindows64 # Build a Windows 64-bit standalone.
-	  - StandaloneLinux64 # Build a Linux 64-bit standalone.
-	  - Android
+        targetPlatform:
+          - StandaloneWindows64 # Build a Windows 64-bit standalone.
+          - StandaloneLinux64 # Build a Linux 64-bit standalone.
+          - Android
 
-         # comment or uncomment your desired platforms
-         
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           lfs: true
+
       - uses: actions/cache@v4
         with:
           path: Library
           key: Library-${{ matrix.targetPlatform }}
           restore-keys: Library-
+
       - uses: game-ci/unity-builder@v4
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -85,6 +83,7 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
+
       - uses: actions/upload-artifact@v4
         with:
           name: Build-${{ matrix.targetPlatform }}
