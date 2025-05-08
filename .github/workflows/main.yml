@@ -1,8 +1,8 @@
 name: Test and Build Project
 
-on: 
-  workflow_dispatch: # workflow dispatch is for manual run from actions page
-  push: # on push
+on:
+  workflow_dispatch: # manual run from Actions tab
+  push: # trigger on push to any branch
 
 jobs:
   testProject:
@@ -22,18 +22,34 @@ jobs:
           - editmode
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
+          fetch-depth: 0 # full clone
           lfs: true
 
-      - uses: actions/cache@v4
+      - name: Show directory structure for debugging
+        run: ls -R
+
+      - name: Check if ProjectVersion.txt exists
+        run: |
+          if [ -f "${{ matrix.projectPath }}/ProjectSettings/ProjectVersion.txt" ]; then
+            echo "ProjectVersion.txt found!"
+          else
+            echo "ERROR: ProjectVersion.txt NOT FOUND!" >&2
+            exit 1
+          fi
+
+      - name: Cache Library folder
+        uses: actions/cache@v4
         with:
           path: ${{ matrix.projectPath }}/Library
-          key: Library-${{ matrix.projectPath }}
+          key: Library-${{ matrix.projectPath }}-${{ github.run_id }}
           restore-keys: |
             Library-
 
-      - uses: game-ci/unity-test-runner@v4
+      - name: Run Unity Tests
+        uses: game-ci/unity-test-runner@v4
         id: tests
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -42,11 +58,13 @@ jobs:
         with:
           projectPath: ${{ matrix.projectPath }}
           testMode: ${{ matrix.testMode }}
+          unityVersion: 6000.0.46f1
           artifactsPath: ${{ matrix.testMode }}-artifacts
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           checkName: ${{ matrix.testMode }} Test Results
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: Test results for ${{ matrix.testMode }}
@@ -60,31 +78,48 @@ jobs:
       fail-fast: false
       matrix:
         targetPlatform:
-          - StandaloneWindows64 # Build a Windows 64-bit standalone.
-          - StandaloneLinux64 # Build a Linux 64-bit standalone.
+          - StandaloneWindows64
+          - StandaloneLinux64
           - Android
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           lfs: true
 
-      - uses: actions/cache@v4
+      - name: Show directory structure for debugging
+        run: ls -R
+
+      - name: Check if ProjectVersion.txt exists
+        run: |
+          if [ -f "./My_project_2/ProjectSettings/ProjectVersion.txt" ]; then
+            echo "ProjectVersion.txt found!"
+          else
+            echo "ERROR: ProjectVersion.txt NOT FOUND!" >&2
+            exit 1
+          fi
+
+      - name: Cache Library folder
+        uses: actions/cache@v4
         with:
           path: Library
-          key: Library-${{ matrix.targetPlatform }}
+          key: Library-${{ matrix.targetPlatform }}-${{ github.run_id }}
           restore-keys: Library-
 
-      - uses: game-ci/unity-builder@v4
+      - name: Build the project
+        uses: game-ci/unity-builder@v4
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
+          unityVersion: 6000.0.46f1
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
         with:
           name: Build-${{ matrix.targetPlatform }}
           path: build/${{ matrix.targetPlatform }}
