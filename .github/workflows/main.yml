@@ -13,7 +13,7 @@ jobs:
     permissions:
       contents: read
       checks: write
-      artifacts: write
+      actions: write
     strategy:
       fail-fast: false
       matrix:
