@@ -97,9 +97,6 @@ jobs:
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
           projectPath: ./My_project_2
-          unityVersion: 6000.0.46f1
-          scenes:
-            - Assets/IndieMarc/PlatformerDemo/PlatformerDemo.unity
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
