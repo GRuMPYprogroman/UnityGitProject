@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 28
-  productGUID: a227e2e8226780a499ef74aca5238584
+  productGUID: 183b112d22554ff41974087b177a50a8
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
-  productName: My_project_2
+  productName: My project (2)
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -333,8 +333,6 @@ PlayerSettings:
     m_GraphicsJobs: 0
   - m_BuildTarget: QNX
     m_GraphicsJobs: 0
-  - m_BuildTarget: Kepler
-    m_GraphicsJobs: 0
   - m_BuildTarget: ReservedCFE
     m_GraphicsJobs: 0
   m_BuildTargetGraphicsJobMode:
@@ -624,12 +622,12 @@ PlayerSettings:
   webGLMemoryLinearGrowthStep: 16
   webGLMemoryGeometricGrowthStep: 0.2
   webGLMemoryGeometricGrowthCap: 96
+  webGLEnableWebGPU: 0
   webGLPowerPreference: 2
   webGLWebAssemblyTable: 0
   webGLWebAssemblyBigInt: 0
   webGLCloseOnQuit: 0
   webWasm2023: 0
-  webEnableSubmoduleStrippingCompatibility: 0
   scriptingDefineSymbols:
     Standalone: PLATFORMER;TOPDOWN
   additionalCompilerArguments: {}
@@ -644,7 +642,6 @@ PlayerSettings:
     EmbeddedLinux: 1
     GameCoreScarlett: 1
     GameCoreXboxOne: 1
-    Kepler: 1
     Nintendo Switch: 1
     PS4: 1
     PS5: 1
@@ -668,14 +665,14 @@ PlayerSettings:
   editorAssembliesCompatibilityLevel: 1
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: My_project_2
+  metroPackageName: My project (2)
   metroPackageVersion: 
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
   metroCertificateNotAfter: 0000000000000000
-  metroApplicationDescription: My_project_2
+  metroApplicationDescription: My project (2)
   wsaImages: {}
   metroTileShortName: 
   metroTileShowName: 0
@@ -747,11 +744,11 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 99cdf83a-44db-463a-9d77-c1d2c88a2dac
+  cloudProjectId: 
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: My_project_2
-  organizationId: gleb812cvv
+  projectName: 
+  organizationId: 
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 1
   hmiLoadingImage: {fileID: 0}
@@ -760,4 +757,3 @@ PlayerSettings:
   insecureHttpOption: 0
   androidVulkanDenyFilterList: []
   androidVulkanAllowFilterList: []
-  androidVulkanDeviceFilterListAsset: {fileID: 0}

@@ -16,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         projectPath:
-          - ./My_project_2
+          - ./UnityGitProject
         testMode:
           - playmode
           - editmode
