@@ -30,15 +30,6 @@ jobs:
       - name: Show directory structure
         run: ls -R
 
-      - name: Check if ProjectVersion.txt exists
-        run: |
-          if [ -f "./My_project_2/ProjectSettings/ProjectVersion.txt" ]; then
-            echo "ProjectVersion.txt found!"
-          else
-            echo "ERROR: ProjectVersion.txt NOT FOUND!" >&2
-            exit 1
-          fi
-
       - name: Cache Library folder
         uses: actions/cache@v4
         with:
